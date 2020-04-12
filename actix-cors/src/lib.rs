@@ -247,7 +247,9 @@ impl Cors {
     ///
     /// Builder panics if supplied origin is not valid uri.
     pub fn allowed_origin(mut self, origin: &str) -> Cors {
+        dbg!(&origin);
         if let Some(cors) = cors(&mut self.cors, &self.error) {
+            dbg!(&cors);
             match Uri::try_from(origin) {
                 Ok(_) => {
                     if cors.origins.is_all() {
@@ -579,8 +581,11 @@ struct Inner {
 
 impl Inner {
     fn validate_origin(&self, req: &RequestHead) -> Result<(), CorsError> {
+        dbg!("validating!"); 
         if let Some(hdr) = req.headers().get(&header::ORIGIN) {
             if let Ok(origin) = hdr.to_str() {
+                dbg!(&origin);
+                dbg!(&self.origins);
                 return match self.origins {
                     AllOrSome::All => Ok(()),
                     AllOrSome::Some(ref allowed_origins) => allowed_origins
@@ -599,6 +604,7 @@ impl Inner {
     }
 
     fn access_control_allow_origin(&self, req: &RequestHead) -> Option<HeaderValue> {
+        dbg!("aarst2");
         match self.origins {
             AllOrSome::All => {
                 if self.send_wildcard {
