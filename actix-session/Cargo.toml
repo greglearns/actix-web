@@ -1,5 +1,5 @@
 [package]
-name = "actix-session"
+name = "actix-session2"
 version = "0.3.0"
 authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
 description = "Session for actix web framework."
